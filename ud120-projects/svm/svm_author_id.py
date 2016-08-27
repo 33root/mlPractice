@@ -12,7 +12,7 @@ import sys
 from time import time
 sys.path.append("../tools/")
 from email_preprocess import preprocess
-
+#from class_vis import prettyPicture
 
 ### features_train and features_test are the features for the training
 ### and testing datasets, respectively
@@ -42,6 +42,7 @@ t1 = time.time()
 pred = gnb.predict(features_test)
 print "prediction time:", round(time.time() - t1,3), "s"
 print "Accuracy:", accuracy_score(pred, labels_test)
+#prettyPicture(gnb, features_test, labels_test)
 #answer10 = pred[10]
 #answer26 = pred[26]
 #answer50 = pred[50]

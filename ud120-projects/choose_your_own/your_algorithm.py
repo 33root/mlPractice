@@ -33,24 +33,54 @@ plt.show()
 import time
 from sklearn.metrics import accuracy_score
 #K Nearest Neighbors
+print "-----------------K Nearest Neighbors--------------------"
 from sklearn.neighbors import KNeighborsClassifier
 
-clf = KNeighborsClassifier()
+clf = KNeighborsClassifier(n_neighbors=9)
 t0 = time.time()
 
 clf.fit(features_train, labels_train)
-print "training time: ", round( time.time() - t0,3), "s"
+print "training time of k nearest neighbors: ", round( time.time() - t0,3), "s"
 t1 = time.time()
 pred = clf.predict(features_test)
-print "predict time: ", round( time.time() - t1,3), "s"
+print "predict time of k nearest neighbors: ", round( time.time() - t1,3), "s"
 
 acc = accuracy_score(pred, labels_test)
 
-print "Accuracy: ", acc
+print "Accuracy of K Nearest Neighbors: ", acc
+
+print "------------------Random Forest Classifier -------------------"
+
+from sklearn.ensemble import RandomForestClassifier
+clf = RandomForestClassifier(n_estimators=15)
+t0 = time.time()
+clf.fit(features_train, labels_train)
+print "Training Time for Random Forest: ", round(time.time() - t0,3), "s"
+
+t1 = time.time()
+pred = clf.predict(features_test)
+print "Prediction Time for Random Forest: ", round(time.time() - t1,3), "s"
+
+acc = accuracy_score(pred, labels_test)
+print "Accuracy of Random Forest:", acc
 
 
+print "----------------------- AdaBoost ----------------------------"
 
-try:
-    prettyPicture(clf, features_test, labels_test)
-except NameError:
-    pass
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.svm import SVC
+
+clf = AdaBoostClassifier(base_estimator=SVC(), algorithm='SAMME')
+t0 = time.time()
+clf.fit(features_train, labels_train)
+print "training time for Adaboost: ", round(time.time()-t0,3), "s"
+
+t1 = time.time()
+pred = clf.predict(features_test)
+print "prediction time for Adaboost: ", round(time.time() - t1,3), "s"
+
+acc = accuracy_score(pred, labels_test)
+prettyPicture(clf, features_test, labels_test)
+print "Accuracy for AdaBoost: ", acc
+
+
